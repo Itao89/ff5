@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SocialHub - Conta nova de Ítalo Paulo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur bg-slate-900/70 border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-center justify-between py-4">
+        <div class="flex items-center gap-3">
+          <div class="brand-gradient p-2 rounded-xl shadow-md">
+            <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 3a9 9 0 00-9 9c0 1.9.59 3.66 1.6 5.11L3 21l3.04-1.56A8.98 8.98 0 0012 21a9 9 0 100-18zm-3 10h6a1 1 0 010 2H9a1 1 0 010-2zm0-4h9a1 1 0 010 2H9a1 1 0 010-2z"/>
+            </svg>
+          </div>
+          <h1 class="text-2xl font-extrabold tracking-tight"><span class="brand-text">SocialHub</span></h1>
+        </div>
+
+        <!-- Busca -->
+        <div class="flex-1 max-w-xl mx-6 hidden md:block">
+          <div class="relative">
+            <input id="searchInput" type="text" placeholder="Pesquisar pessoas, posts..."
+                   class="w-full bg-white/10 placeholder-white/60 text-white rounded-full py-2.5 pl-11 pr-11 border border-white/10 focus:border-white/20 ring-brand transition">
+            <button id="searchIconBtn" class="absolute left-2 top-1.5 p-1.5 rounded-full hover:bg-white/10" type="button" title="Buscar">
+              <svg class="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </button>
+            <div id="searchResults" class="hidden absolute z-50 mt-2 left-0 right-0 bg-slate-900/95 backdrop-blur border border-white/10 rounded-2xl shadow-xl overflow-hidden">
+              <div class="p-3 text-sm text-white/60">Digite para encontrar pessoas…</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações -->
+        <div class="flex items-center gap-2">
+          <button id="btnExplore" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 transition">Explorar</button>
+          <button id="btnMessages" class="relative p-2 rounded-full hover:bg-white/10 transition" title="Mensagens">
+            <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+          </button>
+          <button id="btnNotifications" class="relative p-2 rounded-full hover:bg-white/10 transition" title="Notificações">
+            <svg class="w-6 h-6 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h11a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <span id="notificationBadge" class="absolute -top-1.5 -right-1.5 w-5 h-5 text-xs font-bold rounded-full bg-red-500 text-white grid place-items-center ping-dot">0</span>
+          </button>
+          <div class="relative">
+            <button id="btnProfile" class="flex items-center gap-2 rounded-full hover:bg-white/10 p-1.5 transition">
+              <div class="relative">
+                <button id="btnProfileAvatar" data-action="open-profile" data-handle="@voce" class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 grid place-items-center text-white font-bold">IP</button>
+                <span class="online-dot absolute bottom-0 right-0 w-3 h-3 rounded-full"></span>
+              </div>
+              <span class="hidden sm:block text-white/90 font-semibold" data-action="open-profile" data-handle="@voce">Ítalo Paulo</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Botão Voltar -->
+  <button id="backArrow" class="hidden fixed top-4 left-4 z-[60] p-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-white shadow transition" title="Voltar">
+    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+    </svg>
+  </button>
+
+  <!-- Conteúdo -->
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <!-- Sidebar Esquerda -->
+      <aside class="lg:col-span-1 space-y-6">
+        <section class="card rounded-2xl p-5 bg-slate-900/60">
+          <button data-action="open-profile" data-handle="@voce" class="flex items-center gap-4 text-left w-full hover:bg-white/5 rounded-xl p-2 transition">
+            <div class="relative">
+              <div class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 grid place-items-center text-white font-bold text-lg">IP</div>
+              <span class="online-dot absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full"></span>
+            </div>
+            <div>
+              <h2 class="font-bold text-white hover:underline">Ítalo Paulo</h2>
+              <p class="text-sm text-white/70 hover:underline">@voce</p>
+            </div>
+          </button>
+          <div class="grid grid-cols-3 gap-3 mt-5 text-center">
+            <div class="bg-white/5 rounded-xl p-3">
+              <div id="sidebarFollowersCount" class="text-white font-bold">0</div>
+              <div class="text-xs text-white/60">Seguidores</div>
+            </div>
+            <div class="bg-white/5 rounded-xl p-3">
+              <div id="sidebarFollowingCount" class="text-white font-bold">0</div>
+              <div class="text-xs text-white/60">Seguindo</div>
+            </div>
+            <div class="bg-white/5 rounded-xl p-3">
+              <div id="sidebarPostsCount" class="text-white font-bold">0</div>
+              <div class="text-xs text-white/60">Posts</div>
+            </div>
+          </div>
+          <div class="mt-5 grid grid-cols-2 gap-2">
+            <button class="w-full bg-white/10 hover:bg-white/15 active:bg-white/20 text-white font-semibold py-2.5 rounded-xl transition">Editar perfil</button>
+            <button id="viewOwnProfile" class="w-full brand-gradient hover:brightness-110 active:brightness-95 text-white font-semibold py-2.5 rounded-xl transition">Ver perfil</button>
+          </div>
+        </section>
+
+        <section class="card rounded-2xl p-5 bg-slate-900/60">
+          <h3 class="font-semibold text-white mb-3">Atalhos</h3>
+          <ul class="space-y-2 text-white/90">
+            <li><button id="shortcutExplore" class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 transition">Explorar perfis</button></li>
+            <li><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 transition">Amigos</button></li>
+            <li><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 transition">Grupos</button></li>
+            <li><button class="w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 transition">Eventos</button></li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- Coluna Central -->
+      <section class="lg:col-span-2 space-y-6" id="mainColumn">
+        <!-- Explorar Perfis -->
+        <div id="exploreView" class="hidden space-y-4">
+          <div class="card rounded-2xl p-5 bg-slate-900/60">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h2 class="text-xl font-bold">Explorar perfis</h2>
+              <div class="flex gap-2">
+                <input id="exploreSearch" type="text" placeholder="Buscar por nome ou @"
+                  class="w-full sm:w-64 bg-white/10 text-white placeholder-white/60 rounded-xl py-2 px-3 border border-white/10 focus:border-white/20 ring-brand"/>
+                <button id="exploreClear" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/15">Limpar</button>
+              </div>
+            </div>
+          </div>
+          <div class="card rounded-2xl p-4 bg-slate-900/60">
+            <div id="exploreGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+            <div class="mt-4 text-center">
+              <button id="exploreLoadMore" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15">Carregar mais</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perfil -->
+        <div id="profileView" class="hidden space-y-4">
+          <div class="card rounded-2xl p-5 bg-slate-900/60">
+            <div class="flex items-start gap-4">
+              <div id="profileAvatar" class="w-16 h-16 rounded-full grid place-items-center text-white font-bold bg-gradient-to-br from-purple-500 to-cyan-500">IP</div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h2 id="profileName" class="text-xl font-bold text-white">Ítalo Paulo</h2>
+                    <p id="profileHandle" class="text-white/70 text-sm">@voce</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <button id="profileFollowBtn" class="bg-white/20 text-white font-semibold px-4 py-2 rounded-xl hover:brightness-110 active:brightness-95 transition">Seguir</button>
+                    <button id="backToFeed" class="bg-white/10 hover:bg-white/15 text-white font-semibold px-4 py-2 rounded-xl transition">Voltar</button>
+                  </div>
+                </div>
+                <p id="profileBio" class="mt-3 text-white/90">Olá! Acabei de chegar no SocialHub.</p>
+                <div class="mt-4 grid grid-cols-3 gap-3 text-center">
+                  <div class="bg-white/5 rounded-xl p-3">
+                    <div id="profileFollowers" class="text-white font-bold">0</div>
+                    <div class="text-xs text-white/60">Seguidores</div>
+                  </div>
+                  <div class="bg-white/5 rounded-xl p-3">
+                    <div id="profileFollowing" class="text-white font-bold">Não segue</div>
+                    <div class="text-xs text-white/60">Seguindo</div>
+                  </div>
+                  <div class="bg-white/5 rounded-xl p-3">
+                    <div id="profilePostsCount" class="text-white font-bold">0</div>
+                    <div class="text-xs text-white/60">Posts</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card rounded-2xl p-5 bg-slate-900/60">
+            <h3 class="font-semibold text-white mb-3">Postagens</h3>
+            <div id="profilePosts" class="space-y-5"></div>
+          </div>
+        </div>
+
+        <!-- Criar Post -->
+        <div id="composerCard" class="card rounded-2xl p-5 bg-slate-900/60">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-cyan-500 grid place-items-center text-white font-bold">IP</div>
+            <div class="flex-1">
+              <textarea id="composer" rows="3" placeholder="Escreva seu primeiro post..."
+                        class="w-full bg-white/5 text-white placeholder-white/60 rounded-xl p-3 border border-white/10 focus:border-white/20 ring-brand transition resize-y"></textarea>
+              <div class="flex items-center justify-between mt-3">
+                <div class="flex items-center gap-2">
+                  <button class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 transition">🖼️ Imagem</button>
+                  <button class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 transition">📅 Evento</button>
+                  <button class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/15 text-white/90 transition">👥 Marcar</button>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span id="charCount" class="text-xs text-white/60">0/280</span>
+                  <button id="btnPublish" class="brand-gradient text-white font-semibold px-4 py-2 rounded-xl hover:brightness-110 active:brightness-95 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="feedNotice" class="hidden bg-emerald-500/10 text-emerald-300 border border-emerald-400/20 rounded-xl p-3 text-sm">
+          Mostrando também posts de quem você segue.
+        </div>
+
+        <div id="feed" class="space-y-5"></div>
+      </section>
+
+      <!-- Sidebar Direita -->
+      <aside class="lg:col-span-1 space-y-6">
+        <section class="card rounded-2xl p-5 bg-slate-900/60">
+          <h3 class="font-semibold text-white mb-3">Tendências</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3"><span class="text-cyan-400">#</span><div><p class="font-semibold">TechWeek2025</p><p class="text-xs text-white/60">42.3k menções</p></div></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-400">#</span><div><p class="font-semibold">FotografiaMóvel</p><p class="text-xs text-white/60">18.9k menções</p></div></li>
+            <li class="flex items-start gap-3"><span class="text-cyan-400">#</span><div><p class="font-semibold">CaféPerfeito</p><p class="text-xs text-white/60">12.1k menções</p></div></li>
+          </ul>
+        </section>
+
+        <section class="card rounded-2xl p-5 bg-slate-900/60">
+          <h3 class="font-semibold text-white mb-3">Sugestões para seguir</h3>
+          <div id="suggestions" class="space-y-3"></div>
+          <div class="mt-4 p-3 rounded-xl bg-white/5">
+            <p class="text-sm text-white/80 mb-2">Quem começou a seguir você</p>
+            <div id="followersList" class="space-y-2"></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Painéis -->
+  <div id="panelMessages" class="fixed inset-y-0 right-0 w-full max-w-md translate-x-full transition-transform duration-300 z-50">
+    <div class="h-full flex flex-col bg-slate-900/95 backdrop-blur border-l border-white/10">
+      <div class="p-4 flex items-center justify-between border-b border-white/10">
+        <h3 class="font-bold text-white">Mensagens</h3>
+        <button class="p-2 rounded-full hover:bg-white/10" onclick="togglePanel('panelMessages', false)">✖</button>
+      </div>
+      <div class="p-4 space-y-3 overflow-y-auto scroll-slim" id="messagesList">
+        <div class="text-center text-white/70 bg-white/5 rounded-xl p-6">Sem mensagens ainda.</div>
+      </div>
+      <div class="mt-auto p-4 border-t border-white/10">
+        <div class="flex items-center gap-2">
+          <input id="msgInput" type="text" placeholder="Escreva uma mensagem..." class="flex-1 bg-white/10 text-white placeholder-white/60 rounded-xl py-2 px-3 border border-white/10 focus:border-white/20 ring-brand">
+          <button id="sendMsg" class="brand-gradient text-white font-semibold px-4 py-2 rounded-xl hover:brightness-110 active:brightness-95 transition">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panelNotifications" class="fixed inset-y-0 right-0 w-full max-w-md translate-x-full transition-transform duration-300 z-50">
+    <div class="h-full flex flex-col bg-slate-900/95 backdrop-blur border-l border-white/10">
+      <div class="p-4 flex items-center justify-between border-b border-white/10">
+        <h3 class="font-bold text-white">Notificações</h3>
+        <button class="p-2 rounded-full hover:bg-white/10" onclick="togglePanel('panelNotifications', false)">✖</button>
+      </div>
+      <div id="notificationsList" class="p-4 space-y-3 overflow-y-auto scroll-slim"></div>
+      <div class="p-4 border-t border-white/10 bg-slate-900/70">
+        <div class="flex items-center justify-between">
+          <span class="text-white/80">Seguir quem me seguiu</span>
+          <button id="btnFollowBackAll" class="px-3 py-1.5 rounded-lg brand-gradient text-white font-semibold hover:brightness-110 active:brightness-95 transition">Seguir todos</button>
+        </div>
+      </div>
+      <div class="mt-auto p-4 border-t border-white/10">
+        <button id="markAllRead" class="w-full bg-white/10 hover:bg-white/15 text-white font-semibold py-2.5 rounded-xl transition">Marcar tudo como lido</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
